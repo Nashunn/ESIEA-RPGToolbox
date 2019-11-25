@@ -15,7 +15,6 @@ import fr.nashunn.rpg_toolbox.R;
 import fr.nashunn.rpg_toolbox.model.Dice;
 
 public class MainActivity extends AppCompatActivity {
-    private FloatingActionButton btn_addPlayer;
     private FloatingActionButton btn_dice;
     // private FloatingActionButton btn_addPlayer;
 
@@ -25,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Set fav button clickable
-        btn_dice = findViewById(R.id.btn_addPlayer);
+        //btn_dice = findViewById(R.id.btn_addPlayer);
         btn_dice = findViewById(R.id.btn_dice);
-        setFLoatBtnClick(this, btn_addPlayer, Activity.class);
+        // setFLoatBtnClick(this, btn_addPlayer, AddJoueurActivity.class);
         setFLoatBtnClick(this, btn_dice, DiceActivity.class);
     }
 

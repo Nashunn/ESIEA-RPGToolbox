@@ -9,7 +9,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.IBinder;
-import java.util.Random;
+
+import fr.nashunn.rpg_toolbox.view.DiceActivity;
 
 public class ShakeService extends Service implements SensorEventListener {
 
@@ -50,7 +51,7 @@ public class ShakeService extends Service implements SensorEventListener {
 
         // If it's enought to be detected
         if (mAccel > 11) {
-            // Todo : Change the value of a dice in dice activity
+            // Todo : Change the value of a dice in dice activity ?
         }
 
     }

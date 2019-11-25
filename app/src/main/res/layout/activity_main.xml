@@ -22,7 +22,7 @@
         app:backgroundTint="#39b7c4"
         app:elevation="2dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@id/btn_addPlayer"
+        app:layout_constraintBottom_toTopOf="@id/btn_dice"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
