@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.DiceActivity">
+
+        </activity>
+        <service android:name="fr.nashunn.rpg_toolbox.model.ShakeService"/>
     </application>
 
 </manifest>
