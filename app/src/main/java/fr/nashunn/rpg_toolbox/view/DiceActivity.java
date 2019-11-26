@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.nashunn.rpg_toolbox.R;
 import fr.nashunn.rpg_toolbox.controller.MainControllerDiceAPI;
@@ -53,7 +55,17 @@ public class DiceActivity extends AppCompatActivity {
             // When the device is shook, do the following actions
             @Override
             public void onShake(int count) {
-                controller.getDiceByNumber("d6");
+                //View root_view = findViewById(R.id.diceView).getRootView();
+                DrawDice diceView = findViewById(R.id.diceView);
+                diceView.invalidate();
+                diceView.init();
+                loadDiceValue();
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        controller.getDiceByNumber("d6");
+                    }
+                }, 2000);
             }
         });
     }
@@ -61,6 +73,29 @@ public class DiceActivity extends AppCompatActivity {
     public void updateDiceNumber(List<Dice> dice) {
         diceValue = findViewById(R.id.diceValue);
         diceValue.setText(String.valueOf(dice.get(0).getValue()));
+    }
+
+
+    private void loadDiceValue() {
+        diceValue.setText("");
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                diceValue.setText(".");
+            }
+        }, 500);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                diceValue.setText("..");
+            }
+        }, 1000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                diceValue.setText("...");
+            }
+        }, 1600);
     }
 
     @Override
