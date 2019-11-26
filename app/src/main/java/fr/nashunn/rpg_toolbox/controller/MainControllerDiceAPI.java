@@ -9,16 +9,16 @@ import java.util.List;
 import fr.nashunn.rpg_toolbox.data.DiceAPI;
 import fr.nashunn.rpg_toolbox.data.ResponseAPI;
 import fr.nashunn.rpg_toolbox.model.Dice;
-import fr.nashunn.rpg_toolbox.view.MainActivity;
+import fr.nashunn.rpg_toolbox.view.DiceActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainControllerDiceAPI extends AppCompatActivity {
-    private MainActivity activity;
+    private DiceActivity activity;
     private DiceAPI api;
 
-    public MainControllerDiceAPI(MainActivity activity, DiceAPI api) {
+    public MainControllerDiceAPI(DiceActivity activity, DiceAPI api) {
         this.activity = activity;
         this.api = api;
     }
@@ -38,6 +38,9 @@ public class MainControllerDiceAPI extends AppCompatActivity {
                         if (diceList == null) {
                             diceList = new ArrayList<Dice>();
                         }
+
+                        // Send diceList in current activity
+                        activity.updateDiceNumber(diceList);
 
                     } else {
                         Toast.makeText(activity.getBaseContext(), "ERROR : API did not respond successfully", Toast.LENGTH_LONG).show();

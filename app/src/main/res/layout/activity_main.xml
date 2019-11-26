@@ -9,7 +9,7 @@
     tools:context=".view.MainActivity">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_action"
+        android:id="@+id/btn_addPlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -17,7 +17,24 @@
         android:layout_marginEnd="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_menu_compass"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/background_light"
+        app:backgroundTint="#39b7c4"
+        app:elevation="2dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@id/btn_dice"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_dice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_menu_set_as"
         android:tint="@android:color/background_light"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="2dp"
