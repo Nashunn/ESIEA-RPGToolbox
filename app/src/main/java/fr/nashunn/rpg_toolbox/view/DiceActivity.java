@@ -30,15 +30,18 @@ public class DiceActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
+    private DrawDice diceView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
 
         diceValue = findViewById(R.id.diceValue);
+        diceView = findViewById(R.id.diceView);
+        diceView.setElevation((float) 0.5);
+
         // Set controller
         controller = new MainControllerDiceAPI(this, SingletonAPI.getInstance());
-
         // Init ShakeDetector
         InitShakeDetector();
     }
@@ -55,8 +58,6 @@ public class DiceActivity extends AppCompatActivity {
             // When the device is shook, do the following actions
             @Override
             public void onShake(int count) {
-                //View root_view = findViewById(R.id.diceView).getRootView();
-                DrawDice diceView = findViewById(R.id.diceView);
                 diceView.invalidate();
                 diceView.init();
                 loadDiceValue();
