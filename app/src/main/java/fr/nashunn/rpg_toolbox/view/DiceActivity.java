@@ -96,7 +96,7 @@ public class DiceActivity extends AppCompatActivity {
             public void run() {
                 diceValue.setText("...");
             }
-        }, 1600);
+        }, 1500);
     }
 
     @Override
