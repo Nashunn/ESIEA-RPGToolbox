@@ -2,9 +2,11 @@ package fr.nashunn.rpg_toolbox.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,9 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
     public ImageView iv_deletePlayer;
     public ImageView iv_playerAvatar;
     public ImageView iv_resetPlayer;
+    public ImageView iv_scoreMinus;
+    public ImageView iv_scorePlus;
+    public EditText et_playerScore;
     private Player currentPlayer;
 
     public PlayerViewHolder(@NonNull View itemView) {
@@ -28,6 +33,9 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
         iv_deletePlayer = view.findViewById(R.id.iv_deletePlayer);
         iv_playerAvatar = view.findViewById(R.id.iv_playerAvatar);
         iv_resetPlayer = view.findViewById(R.id.iv_resetPlayer);
+        iv_scoreMinus = view.findViewById(R.id.iv_scoreMinus);
+        iv_scorePlus = view.findViewById(R.id.iv_scorePlus);
+        et_playerScore = view.findViewById(R.id.et_playerScore);
 
         // Setting onClick
         itemView.setClickable(true);

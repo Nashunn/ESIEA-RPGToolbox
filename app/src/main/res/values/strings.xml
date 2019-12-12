@@ -2,4 +2,5 @@
     <string name="app_name">RPG-Toolbox</string>
     <string name="diceText">Le résultat du lancer de dé est :</string>
     <string name="diceValue">X</string>
+    <string name="pref_players">fr.nashunn.drinkit.pref_players</string>
 </resources>

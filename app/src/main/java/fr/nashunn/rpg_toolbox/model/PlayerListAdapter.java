@@ -36,13 +36,17 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
-        // Get the drink at indicated position in the dataset
+        // Get the player at indicated position in the dataset
         final Player currentPlayer = dataset.get(position);
         holder.setCurrentPlayer(currentPlayer);
+        // Prepare custom temp color
+        List colors = MainActivity.randomColor();
 
         // Avatar : Get color and prepare avatar
-        List colors = MainActivity.randomColor();
         ImageViewCompat.setImageTintList(holder.iv_playerAvatar, ColorStateList.valueOf((Integer)colors.get(0)));
+        // EditText Score : Change color and set score
+        holder.et_playerScore.setBackgroundColor((Integer) colors.get(1));
+        holder.et_playerScore.setText("0");
 
         // Set player information
         holder.tv_playerName.setText("Player");

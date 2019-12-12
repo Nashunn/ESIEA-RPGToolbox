@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         b = rnd.nextInt(256);
 
         result.add(Color.argb(255, r, g, b));
-        result.add(Color.argb(150, r, g, b));
+        result.add(Color.argb(80, r, g, b));
 
         return result;
     }
