@@ -7,7 +7,9 @@
     app:cardElevation="2dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="15dp">
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp">
 
     <GridLayout
         android:layout_width="match_parent"
@@ -20,10 +22,12 @@
             android:id="@+id/tv_playerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_column="0"
             android:layout_row="0"
-            android:text="Name Player"
-            android:textSize="20sp" />
+            android:text="Player Name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22sp" />
 
         <ImageView
             android:id="@+id/iv_deletePlayer"
@@ -42,11 +46,11 @@
             android:layout_height="75dp"
             android:layout_column="0"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="15dp"
             android:layout_row="1"
             android:layout_rowSpan="2"
+            android:layout_marginRight="30dp"
             android:tint="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_menu_gallery" />
+            app:srcCompat="@drawable/ic_rpgtoolbox_player"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,9 +74,10 @@
             <EditText
                 android:id="@+id/et_playerScore"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="3"
+                android:layout_height="35sp"
                 android:layout_marginHorizontal="15dp"
+                android:background="#e5e5e5"
+                android:ems="3"
                 android:inputType="numberSigned" />
 
             <ImageView

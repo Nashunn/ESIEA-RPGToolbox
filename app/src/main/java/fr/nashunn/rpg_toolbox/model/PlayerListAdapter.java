@@ -1,7 +1,10 @@
 package fr.nashunn.rpg_toolbox.model;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import fr.nashunn.rpg_toolbox.R;
+import fr.nashunn.rpg_toolbox.view.MainActivity;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
     private List<Player> dataset;
@@ -36,7 +40,11 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
         final Player currentPlayer = dataset.get(position);
         holder.setCurrentPlayer(currentPlayer);
 
-        //Picasso.get().load(currentPlayer.getIcon()).into(holder.iv_image);
+        // Avatar : Get color and prepare avatar
+        List colors = MainActivity.randomColor();
+        ImageViewCompat.setImageTintList(holder.iv_playerAvatar, ColorStateList.valueOf((Integer)colors.get(0)));
+
+        // Set player information
         holder.tv_playerName.setText("Player");
     }
 
