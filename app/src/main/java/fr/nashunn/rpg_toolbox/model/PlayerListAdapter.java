@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +35,21 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
         return new PlayerViewHolder(v);
     }
 
-    @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         // Get the player at indicated position in the dataset
         final Player currentPlayer = dataset.get(position);
         holder.setCurrentPlayer(currentPlayer);
+
         // Prepare custom temp color
         List colors = MainActivity.randomColor();
-
         // Avatar : Get color and prepare avatar
         ImageViewCompat.setImageTintList(holder.iv_playerAvatar, ColorStateList.valueOf((Integer)colors.get(0)));
         // EditText Score : Change color and set score
         holder.et_playerScore.setBackgroundColor((Integer) colors.get(1));
-        holder.et_playerScore.setText("0");
+        holder.et_playerScore.setText(Integer.toString(currentPlayer.getScore()));
 
         // Set player information
-        holder.tv_playerName.setText("Player");
+        holder.tv_playerName.setText(currentPlayer.getName());
     }
 
     @Override

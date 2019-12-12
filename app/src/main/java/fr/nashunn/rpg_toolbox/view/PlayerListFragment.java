@@ -3,51 +3,71 @@ package fr.nashunn.rpg_toolbox.view;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 import fr.nashunn.rpg_toolbox.R;
 import fr.nashunn.rpg_toolbox.model.Player;
 import fr.nashunn.rpg_toolbox.model.PlayerListAdapter;
 
 public class PlayerListFragment extends Fragment {
-    private FloatingActionButton btn_dice;
+    private SharedPreferences sharedPreferences_players;
     private View view;
-    // private FloatingActionButton btn_addPlayer;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate fragment
         view = inflater.inflate(R.layout.fragment_user_list, container, false);
 
-        // Set fav button clickable
-        //btn_dice = view.findViewById(R.id.btn_addPlayer);
-        btn_dice = view.findViewById(R.id.btn_dice);
-        // setFLoatBtnClick(this, btn_addPlayer, AddJoueurActivity.class);
-        setFLoatBtnClick(this.getContext(), btn_dice, DiceActivity.class);
+        // Set float button clickable
+        FloatingActionButton btn_addPlayer = view.findViewById(R.id.btn_addPlayer);
+        FloatingActionButton btn_dice = view.findViewById(R.id.btn_dice);
+        setFLoatBtnClickPopup(this.getContext(), btn_addPlayer);
+        setFLoatBtnClickChangeActivity(this.getContext(), btn_dice, DiceActivity.class);
 
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player());
-        players.add(new Player());
-        updatePlayerList(players);
+        // Get SharePreference Player in cache
+        updatePlayerList(getCachePlayers()); // Update list with cache
 
         return view;
     }
 
-    private void setFLoatBtnClick(final Context context, FloatingActionButton btn, final Class targetActivity) {
+    private void setFLoatBtnClickPopup(final Context context, FloatingActionButton btn) {
         btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(context);
+            }
+        });
+    }
+
+    private void setFLoatBtnClickChangeActivity(final Context context, FloatingActionButton btn, final Class targetActivity) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, targetActivity);
                 context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle()); // With transition
@@ -56,18 +76,77 @@ public class PlayerListFragment extends Fragment {
     }
 
     public void updatePlayerList(List<Player> data) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        PlayerListAdapter cocktailListAdapter = new PlayerListAdapter(this.getContext(), data);
         // Initalize a linear layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        PlayerListAdapter playerListAdapter = new PlayerListAdapter(this.getContext(), data);
 
         // Set view components
-        RecyclerView cocktailRecyclerView = (RecyclerView) view.findViewById(R.id.player_recylerView);
-        cocktailRecyclerView.setLayoutManager(layoutManager);
-        cocktailRecyclerView.setHasFixedSize(true);
+        RecyclerView playerRecyclerView = (RecyclerView) view.findViewById(R.id.player_recylerView);
+        playerRecyclerView.setLayoutManager(layoutManager);
+        playerRecyclerView.setHasFixedSize(true);
 
 
-        // specify an adapter (see also next example)
+        // Specify an adapter
+        playerRecyclerView.setAdapter(playerListAdapter);
+    }
 
-        cocktailRecyclerView.setAdapter(cocktailListAdapter);
+    protected void showInputDialog(Context context) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View promptView = layoutInflater.inflate(R.layout.popup_add_player, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptView);
+
+
+        // Setup the popup
+        final EditText playerName = (EditText) promptView.findViewById(R.id.et_addPlayer_name);
+        alertDialogBuilder.setCancelable(false)
+            // If yes
+            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // Do actions to add a player to the list
+                    addPlayerActions(
+                        new Player(playerName.getText().toString())
+                    );
+                }
+            })
+            // If no
+            .setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }
+            );
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
+    private List<Player> getCachePlayers() {
+        List<Player> result = new LinkedList<>();
+        sharedPreferences_players = Objects.requireNonNull(this.getContext()).getSharedPreferences(getString(R.string.pref_players), Context.MODE_PRIVATE);
+        Map<String, ?> playersList = sharedPreferences_players.getAll();
+
+        for (Map.Entry<String, ?> player : playersList.entrySet()) {
+            Type typePlayer = new TypeToken<Player>(){}.getType();
+            String strPlayer = player.getValue().toString();
+
+            Player currentPlayer = new Gson().fromJson(strPlayer, typePlayer);
+            result.add(currentPlayer);
+        }
+
+        return result;
+    }
+
+    private void addPlayerActions(Player player) {
+        // Add player to cache
+        Gson oGson = new Gson();
+        String drinkStr = oGson.toJson(player);
+        sharedPreferences_players.edit()
+            .putString(player.getId(), drinkStr)
+            .apply();
+
+        updatePlayerList(getCachePlayers()); // Update list with cache
     }
 }
