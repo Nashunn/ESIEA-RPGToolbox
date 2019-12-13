@@ -44,11 +44,8 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
 
     @Override
     public void onClick(View v) {
-        // TODO
-        Toast.makeText(context, "Click on player : "+currentPlayer, Toast.LENGTH_LONG).show();
-        // Intent intent = new Intent(context, PlayerDescriptionActivity.class);
-        // intent.putExtra("Player", currentPlayer);
-        // context.startActivity(intent);
+        // Focus on score textview
+        et_playerScore.requestFocus();
     }
 
     public void setCurrentPlayer(Player player) {
