@@ -36,7 +36,7 @@ import fr.nashunn.rpg_toolbox.model.PlayerListAdapter;
 
 public class PlayerListFragment extends Fragment {
     private SharedPreferences sharedPreferences_players;
-    private View view;
+    public static View view;
 
     @Nullable
     @Override
@@ -75,10 +75,10 @@ public class PlayerListFragment extends Fragment {
         });
     }
 
-    public void updatePlayerList(List<Player> data) {
+    public static void updatePlayerList(List<Player> data) {
         // Initalize a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        PlayerListAdapter playerListAdapter = new PlayerListAdapter(this.getContext(), data);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        PlayerListAdapter playerListAdapter = new PlayerListAdapter(view.getContext(), data);
 
         // Set view components
         RecyclerView playerRecyclerView = (RecyclerView) view.findViewById(R.id.player_recylerView);
@@ -142,9 +142,9 @@ public class PlayerListFragment extends Fragment {
     private void addPlayerActions(Player player) {
         // Add player to cache
         Gson oGson = new Gson();
-        String drinkStr = oGson.toJson(player);
+        String playerStr = oGson.toJson(player);
         sharedPreferences_players.edit()
-            .putString(player.getId(), drinkStr)
+            .putString(player.getId(), playerStr)
             .apply();
 
         updatePlayerList(getCachePlayers()); // Update list with cache
