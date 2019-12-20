@@ -40,7 +40,7 @@ public class DrawDice extends View {
     }
 
     public void init() {
-        List color = randomColor();
+        List color = MainActivity.randomColor();
 
         paint = new Paint();
         paint.setColor((Integer) color.get(0));
@@ -87,19 +87,5 @@ public class DrawDice extends View {
     public void onDraw(Canvas c) {
         super.onDraw(c);
         c.drawPath(path, paint);
-    }
-
-    private List randomColor() {
-        List result = new ArrayList<Integer>();
-        Random rnd = new Random();
-        int r, g, b;
-        r = rnd.nextInt(256);
-        g = rnd.nextInt(256);
-        b = rnd.nextInt(256);
-
-        result.add(Color.argb(255, r, g, b));
-        result.add(Color.argb(150, r, g, b));
-
-        return result;
     }
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="5"
+        android:padding="10dp"
+        android:rowCount="3">
+
+        <TextView
+            android:id="@+id/tv_playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:text="Player Name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:id="@+id/iv_deletePlayer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_column="4"
+            android:layout_row="0"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/iv_playerAvatar"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:layout_row="1"
+            android:layout_rowSpan="2"
+            android:layout_marginRight="30dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_rpgtoolbox_player"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:layout_rowSpan="2"
+            android:layout_gravity="fill_vertical"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_scoreMinus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_minus_sign" />
+
+            <EditText
+                android:id="@+id/et_playerScore"
+                android:layout_width="wrap_content"
+                android:layout_height="50sp"
+                android:textSize="20sp"
+                android:layout_marginHorizontal="15dp"
+                android:background="#e5e5e5"
+                android:ems="3"
+                android:inputType="numberSigned"
+                android:textColor="@color/colorPrimary"
+                android:textCursorDrawable="@drawable/primary_cursor"
+                android:selectAllOnFocus="true"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/iv_scorePlus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_plus_sign" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_resetPlayer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_column="4"
+            android:layout_row="2"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+    </GridLayout>
+</android.support.v7.widget.CardView>

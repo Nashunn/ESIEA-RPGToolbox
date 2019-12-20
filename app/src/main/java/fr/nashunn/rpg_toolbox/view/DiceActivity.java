@@ -9,11 +9,13 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,15 +32,20 @@ public class DiceActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
+    private DrawDice diceView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
 
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); // Put back button
+
         diceValue = findViewById(R.id.diceValue);
+        diceView = findViewById(R.id.diceView);
+        diceView.setElevation((float) 0.5);
+
         // Set controller
         controller = new MainControllerDiceAPI(this, SingletonAPI.getInstance());
-
         // Init ShakeDetector
         InitShakeDetector();
     }
@@ -55,8 +62,6 @@ public class DiceActivity extends AppCompatActivity {
             // When the device is shook, do the following actions
             @Override
             public void onShake(int count) {
-                //View root_view = findViewById(R.id.diceView).getRootView();
-                DrawDice diceView = findViewById(R.id.diceView);
                 diceView.invalidate();
                 diceView.init();
                 loadDiceValue();
@@ -95,7 +100,7 @@ public class DiceActivity extends AppCompatActivity {
             public void run() {
                 diceValue.setText("...");
             }
-        }, 1600);
+        }, 1500);
     }
 
     @Override
@@ -110,5 +115,18 @@ public class DiceActivity extends AppCompatActivity {
         // Add the following line to unregister the Sensor Manager onPause
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
