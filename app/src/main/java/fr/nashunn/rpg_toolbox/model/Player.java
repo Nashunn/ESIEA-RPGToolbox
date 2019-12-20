@@ -1,17 +1,15 @@
 package fr.nashunn.rpg_toolbox.model;
 
+import android.graphics.Color;
+
 import java.util.UUID;
 
 public class Player {
     private String id;
     private String name;
     private int score;
-
-    public Player() {
-        this.id = generateId();
-        this.name = "Player";
-        this.score = 0;
-    }
+    private int colorPrimary;
+    private int colorSecondary;
 
     public Player(String name) {
         this.id = generateId();
@@ -19,10 +17,12 @@ public class Player {
         this.score = 0;
     }
 
-    public Player(String name, int score) {
+    public Player(String name, int score, Integer color1, Integer color2) {
         this.id = generateId();
         this.name = name;
         this.score = score;
+        this.colorPrimary = color1;
+        this.colorSecondary = color2;
     }
 
     // Id
@@ -48,5 +48,21 @@ public class Player {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+
+    // Color primary
+    public int getColorPrimary() {
+        return colorPrimary;
+    }
+    public void setColorPrimary(int colorPrimary) {
+        this.colorPrimary = colorPrimary;
+    }
+
+    // Color secondary
+    public int getColorSecondary() {
+        return colorSecondary;
+    }
+    public void setColorSecondary(int colorSecondary) {
+        this.colorSecondary = colorSecondary;
     }
 }

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public static List<Color> randomColor() {
+    public static List<Integer> randomColor() {
         List result = new ArrayList<Integer>();
         Random rnd = new Random();
         int r, g, b;

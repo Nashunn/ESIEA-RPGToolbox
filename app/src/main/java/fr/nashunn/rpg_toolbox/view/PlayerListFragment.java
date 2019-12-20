@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import fr.nashunn.rpg_toolbox.model.PlayerListAdapter;
 
 public class PlayerListFragment extends Fragment {
     private SharedPreferences sharedPreferences_players;
+    public static PlayerListAdapter playerListAdapter;
     public static View view;
 
     @Nullable
@@ -51,7 +53,7 @@ public class PlayerListFragment extends Fragment {
         setFLoatBtnClickChangeActivity(this.getContext(), btn_dice, DiceActivity.class);
 
         // Get SharePreference Player in cache
-        updatePlayerList(getCachePlayers()); // Update list with cache
+        initPlayerList(getCachePlayers()); // Update list with cache
 
         return view;
     }
@@ -75,19 +77,22 @@ public class PlayerListFragment extends Fragment {
         });
     }
 
-    public static void updatePlayerList(List<Player> data) {
+    public static void initPlayerList(List<Player> data) {
         // Initalize a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        PlayerListAdapter playerListAdapter = new PlayerListAdapter(view.getContext(), data);
+        playerListAdapter = new PlayerListAdapter(view.getContext(), data);
 
         // Set view components
         RecyclerView playerRecyclerView = (RecyclerView) view.findViewById(R.id.player_recylerView);
         playerRecyclerView.setLayoutManager(layoutManager);
         playerRecyclerView.setHasFixedSize(true);
 
-
         // Specify an adapter
         playerRecyclerView.setAdapter(playerListAdapter);
+    }
+
+    public static void updatePlayerList() {
+        playerListAdapter.notifyDataSetChanged();
     }
 
     protected void showInputDialog(Context context) {
@@ -99,13 +104,14 @@ public class PlayerListFragment extends Fragment {
 
         // Setup the popup
         final EditText playerName = (EditText) promptView.findViewById(R.id.et_addPlayer_name);
+        final List<Integer> colors = MainActivity.randomColor();
         alertDialogBuilder.setCancelable(false)
             // If yes
             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // Do actions to add a player to the list
                     addPlayerActions(
-                        new Player(playerName.getText().toString())
+                        new Player(playerName.getText().toString(), 0, colors.get(0), colors.get(1))
                     );
                 }
             })
@@ -147,6 +153,6 @@ public class PlayerListFragment extends Fragment {
             .putString(player.getId(), playerStr)
             .apply();
 
-        updatePlayerList(getCachePlayers()); // Update list with cache
+        initPlayerList(getCachePlayers()); // Update list with cache
     }
 }

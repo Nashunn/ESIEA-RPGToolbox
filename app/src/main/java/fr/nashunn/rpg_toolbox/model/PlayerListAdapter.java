@@ -40,12 +40,10 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerViewHolder> {
         final Player currentPlayer = dataset.get(position);
         holder.setCurrentPlayer(currentPlayer);
 
-        // Prepare custom temp color
-        List colors = MainActivity.randomColor();
         // Avatar : Get color and prepare avatar
-        ImageViewCompat.setImageTintList(holder.iv_playerAvatar, ColorStateList.valueOf((Integer)colors.get(0)));
+        ImageViewCompat.setImageTintList(holder.iv_playerAvatar, ColorStateList.valueOf(currentPlayer.getColorPrimary()));
         // EditText Score : Change color and set score
-        holder.et_playerScore.setBackgroundColor((Integer) colors.get(1));
+        holder.et_playerScore.setBackgroundColor(currentPlayer.getColorSecondary());
         holder.et_playerScore.setText(Integer.toString(currentPlayer.getScore()));
 
         // Set player information

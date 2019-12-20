@@ -15,13 +15,12 @@ import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import fr.nashunn.rpg_toolbox.R;
 import fr.nashunn.rpg_toolbox.view.PlayerListFragment;
 
 
-public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+public class PlayerViewHolder extends RecyclerView.ViewHolder {
     private final Context context;
     public View view;
     public TextView tv_playerName;
@@ -48,18 +47,11 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
 
         sharedPreferences_players = context.getSharedPreferences(context.getString(R.string.pref_players), Context.MODE_PRIVATE);
 
-        // Setting onClick on item
-        itemView.setClickable(true);
-        itemView.setOnClickListener(this);
         //Setting onClick on button
         onClickCounterActionsPlayer(iv_scoreMinus, false);
         onClickCounterActionsPlayer(iv_scorePlus, true);
-    }
-
-    @Override
-    public void onClick(View v) {
-        // Focus on score textview
-        et_playerScore.requestFocus();
+        onClickDeletePlayer();
+        onClickRefreshScore();
     }
 
     // Set a listener on the + ou - of the counter
@@ -72,16 +64,46 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements View.On
                 else
                     currentPlayer.setScore(currentPlayer.getScore() - 1);
 
-                // Update
-                Gson oGson = new Gson();
-                String playerStr = oGson.toJson(currentPlayer);
-                sharedPreferences_players.edit()
-                        .putString(currentPlayer.getId(), playerStr)
-                        .apply();
-
-                PlayerListFragment.updatePlayerList(getCachePlayers());
+                updatePlayerData();
             }
         });
+    }
+
+    // Set a listener on the refresh button
+    private void onClickRefreshScore() {
+        iv_resetPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentPlayer.setScore(0);
+                updatePlayerData();
+            }
+        });
+    }
+
+    // Set a listener on the delete button
+    private void onClickDeletePlayer() {
+        iv_deletePlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharedPreferences_players.edit()
+                    .remove(currentPlayer.getId())
+                    .apply();
+
+                PlayerListFragment.initPlayerList(getCachePlayers());
+            }
+        });
+    }
+
+    // Update player data
+    public void updatePlayerData() {
+        // Update
+        Gson oGson = new Gson();
+        String playerStr = oGson.toJson(currentPlayer);
+        sharedPreferences_players.edit()
+            .putString(currentPlayer.getId(), playerStr)
+            .apply();
+
+        PlayerListFragment.updatePlayerList();
     }
 
     private List<Player> getCachePlayers() {
