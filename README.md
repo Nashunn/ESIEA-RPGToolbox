@@ -24,7 +24,7 @@ When you shake your phone to roll a dice, it will call the api, which will then 
   - Gitflow : ✔️
 
 ## Demonstration
-![Demo](https://gifyu.com/image/mx9S)
+[![Demo_RPGToolbox](https://s5.gifyu.com/images/Demo_RPGToolbox.gif)](https://gifyu.com/image/mx9S)
 
 ## Tools :
 - [Git-Flow](https://danielkummer.github.io/git-flow-cheatsheet/index.fr_FR.html)
