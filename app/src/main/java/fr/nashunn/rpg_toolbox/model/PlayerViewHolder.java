@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -52,6 +56,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
         onClickCounterActionsPlayer(iv_scorePlus, true);
         onClickDeletePlayer();
         onClickRefreshScore();
+        OnChangeScore();
     }
 
     // Set a listener on the + ou - of the counter
@@ -93,6 +98,27 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
+
+    private void OnChangeScore() {
+        et_playerScore.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                currentPlayer.setScore(Integer.parseInt(s.toString()));
+                //updatePlayerData();
+            }
+        });
+    }
+
 
     // Update player data
     public void updatePlayerData() {
